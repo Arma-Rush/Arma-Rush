@@ -18,7 +18,7 @@ if (isServer) then {
 		
 		// determine if player left the objective before they could arm it
 		while {((serverTime < _armTime)AND(!_terminateArmed))} do {
-			if ((_player distance _obj)>=5) then {
+			if (((_player distance _obj)>=5)OR(!alive _player)OR((vehicle _player) != _player)) then {
 				_terminateArmed = true;
 				deleteVehicle _helipad;
 			};
@@ -40,6 +40,8 @@ if (isServer) then {
 			_detTime = serverTime + 30;
 			
 			[_helipad,["bombAlarm",30,1]] remoteExec ["say3D",0,false];
+			
+			["US_Friendly_Charge_Armed_A",true] remoteExec ["playSound",west,false];
 			
 			while {serverTime <= _detTime} do {
 				scopeName "countDownLoop";

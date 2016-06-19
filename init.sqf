@@ -4,7 +4,11 @@ end = false;
 
 defenders = east;
 attackers = west;
-	
+
+if (!isServer) then {
+	execVM "zoneRestriction.sqf";
+};
+
 if (isServer ) then {
 	
 	playerADisarming = nil;
@@ -27,7 +31,7 @@ if (isServer ) then {
 	publicVariable "objBCurr";
 	publicVariable "activeRestrictions";
 	
-	execVm "kill.sqf"; // TESTING ONLY
+	//execVm "kill.sqf"; // TESTING ONLY
 	//execVm "tickets.sqf"; // TESTING ONLY
 	//execVM "vehicle.sqf";
 	
@@ -72,13 +76,13 @@ if (isServer ) then {
 	{
 		_x addMPEventHandler ["mpkilled", {[_this] execVM "objDestroyed.sqf";}]; 
 		_x enableSimulationGlobal false;
-		clearWeaponCargo _x;
-		clearMagazineCargo _x;
+		clearWeaponCargoGlobal _x;
+		clearMagazineCargoGlobal _x;
 	} forEach _objs;
 	
 	// disable simulation for all obj charges and hide them
 	{
-		_x hideObject true;
+		_x hideObjectGlobal true;
 		_x enableSimulationGlobal false;
 	} forEach _objCharges;
 	

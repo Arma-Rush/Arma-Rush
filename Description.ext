@@ -33,7 +33,7 @@ class CfgSounds
 	{
 		name = "US_Friendly_Charge_Armed_A"; // Name for mission editor
 		sound[] = {US_Friendly_Charge_Armed_A.ogg, db+10, 1};
-		title = "Charge armed at Alpha.";
+		titles[] = {0, ""};
 	};
 	class US_Friendly_Charge_Armed_B
 	{
