@@ -1,4 +1,7 @@
-//if(!isServer) then {
+// This script is called by the zone restriction module on each client locally.
+// Handles the screen and audio effects of going out of bounds.
+
+if(isPlayer player) then { // keep dem robots out!
 	_unit = _this select 0;
 	_create = _this select 1;
 	_trigger = _this select 2;
@@ -12,26 +15,22 @@
 	2 fadeSound .5;
 
 	private ["_pp1","_pp2"];
-
-	//if (_create) then {
 	
-		_pp1 = ppEffectCreate["colorCorrections", 10];
-		_pp1 ppEffectAdjust [1, 1, 0, [1, 1, 1, 0], [1, 1, 1, 0], [0.75, 0.25, 0, 1.0]];
-		_pp1 ppEffectCommit 1;
-		_pp1 ppEffectEnable TRUE;
+	_pp1 = ppEffectCreate["colorCorrections", 10];
+	_pp1 ppEffectAdjust [1, 1, 0, [1, 1, 1, 0], [1, 1, 1, 0], [0.75, 0.25, 0, 1.0]];
+	_pp1 ppEffectCommit 1;
+	_pp1 ppEffectEnable TRUE;
 
-		_pp2 = ppEffectCreate["filmGrain", 10];
-		_pp2 ppEffectAdjust [0.04, 1, 1, 0, 1];
-		_pp2 ppEffectCommit 1;
-		_pp2 ppEffectEnable TRUE;
-	//};
-	
-		if(playerSide == east) then {
-			playSound ["csatOutOfBounds",true];
-		} else {
-			//[_helipad,player] say ["natoOutOfBounds",1,1];
-			playSound ["natoOutOfBounds",true];
-		};
+	_pp2 = ppEffectCreate["filmGrain", 10];
+	_pp2 ppEffectAdjust [0.04, 1, 1, 0, 1];
+	_pp2 ppEffectCommit 1;
+	_pp2 ppEffectEnable TRUE;
+
+	if(playerSide == east) then {
+		playSound ["csatOutOfBounds",true];
+	} else {
+		playSound ["natoOutOfBounds",true];
+	};
 	
 	_sound = ASLToAGL [0,0,0] nearestObject "#soundonvehicle";
 	while {player inArea _trigger;} do { 
@@ -46,4 +45,4 @@
 	deleteVehicle _sound;
 	1 fadeSound 1;
 	exit;
-//};
+};
