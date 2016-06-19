@@ -8,6 +8,8 @@
 			_trigger = _x;
 		};
 	}forEach activeRestrictions;
+	
+	2 fadeSound .5;
 
 	private ["_pp1","_pp2"];
 
@@ -23,7 +25,15 @@
 		_pp2 ppEffectCommit 1;
 		_pp2 ppEffectEnable TRUE;
 	//};
-
+	
+		if(playerSide == east) then {
+			playSound ["csatOutOfBounds",true];
+		} else {
+			//[_helipad,player] say ["natoOutOfBounds",1,1];
+			playSound ["natoOutOfBounds",true];
+		};
+	
+	_sound = ASLToAGL [0,0,0] nearestObject "#soundonvehicle";
 	while {player inArea _trigger;} do { 
 		scopeName "loop";
 		if (!alive player) then {
@@ -33,5 +43,7 @@
 	};
 	
 	ppEffectDestroy [_pp1, _pp2];
+	deleteVehicle _sound;
+	1 fadeSound 1;
 	exit;
 //};
