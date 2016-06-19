@@ -83,6 +83,18 @@ class CfgSounds
 		sound[] = {vo_ru_mp_gm_rush_charge_armed_hostile_b.ogg, 1, 1};
 		titles[] = {0, ""};
 	};
+	class csatOutOfBounds
+	{
+		name = "csatOutOfBounds"; // Name for mission editor
+		sound[] = {russianOutofBounds.ogg, db+10, 1};
+		titles[] = {0, ""};
+	};
+	class natoOutOfBounds
+	{
+		name = "csatOutOfBounds"; // Name for mission editor
+		sound[] = {natoOutofBounds.ogg, db+10, 1};
+		titles[] = {0, ""};
+	};
 };
 class CfgRadio
 {
