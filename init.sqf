@@ -27,7 +27,7 @@ if (isServer ) then {
 	publicVariable "objBCurr";
 	publicVariable "activeRestrictions";
 	
-	//execVm "kill.sqf"; // TESTING ONLY
+	execVm "kill.sqf"; // TESTING ONLY
 	//execVm "tickets.sqf"; // TESTING ONLY
 	//execVM "vehicle.sqf";
 	

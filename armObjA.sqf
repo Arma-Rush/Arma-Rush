@@ -28,7 +28,7 @@ if (isServer) then {
 		deleteVehicle _helipad;
 		
 		// begin bomb detonation countdown
-		if ((!_terminateArmed)AND(!objAArmed)AND(alive _player)) then {
+		if ((!_terminateArmed)AND(!objAArmed)AND(alive _player)AND((vehicle player) == player)) then {
 			objAArmed = true;
 			publicVariable "objAArmed";
 			"Objective A armed" remoteExec ["hint",0,false];
