@@ -19,7 +19,7 @@ if (isServer) then {
 		publicVariable "objBDisarming";
 		
 		while {((serverTime < _armTime)AND(!_terminateDisarm))} do {
-			if (((_player distance _obj)>=5)OR(!(alive _player))) then {
+			if (((_player distance _obj)>=5)OR(!(alive _player))OR((vehicle _player) != _player)) then {
 				_terminateDisarm = true;
 				deleteVehicle _helipad;
 				objBDisarming = false;

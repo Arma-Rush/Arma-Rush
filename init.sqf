@@ -5,8 +5,9 @@ end = false;
 defenders = east;
 attackers = west;
 
-if (!isServer) then {
-	execVM "zoneRestriction.sqf";
+if (!isDedicated) then {
+player addEventHandler ["GetInMan", {[_this] execVM "vehicleAbandonded.sqf"}];
+execVM "zoneRestriction.sqf";
 };
 
 if (isServer ) then {
@@ -34,6 +35,7 @@ if (isServer ) then {
 	//execVm "kill.sqf"; // TESTING ONLY
 	//execVm "tickets.sqf"; // TESTING ONLY
 	//execVM "vehicle.sqf";
+	//execVM "distance.sqf";
 	
 	_objs = [obj1,obj2,obj3,obj4,obj5,obj6,obj7,obj8];
 	_objCharges = [obj1Charge,obj2Charge,obj3Charge,obj4Charge,obj5Charge,obj6Charge,obj7Charge,obj8Charge];
@@ -111,6 +113,15 @@ if (isServer ) then {
 	[obj8,[("<t color=""#00FF00"">"+"Disarm Objective"+"</t>"),"disarmobj.sqf",[obj8],6,true,true,"","(((player distance obj8) < 5)AND(objBArmed)AND(alive obj8)AND(player==vehicle player))"]]remoteExec["addAction",defenders,true];
 };
 
+if (!isServer) then {
+	
+	waitUntil {!isNull player};
+
+	//player addEventHandler ["getoutman", {[_this] execVM "vehicleAbandonded.sqf"}];
+	player addEventHandler ["GetInMan", {[_this] execVM "vehicleAbandonded.sqf"}];
+
+	execVM "zoneRestriction.sqf";
+
 	a = addMissionEventHandler ["Draw3D", {
 		drawIcon3D ["A3\ui_f\data\map\markers\military\destroy_CA.paa", [1,1,1,1], getPosATL objACurr, 1, 1, 45, "A", 1, 0.05, "TahomaB","center",true];
 	}];
@@ -118,15 +129,17 @@ if (isServer ) then {
 		drawIcon3D ["A3\ui_f\data\map\markers\military\destroy_CA.paa", [1,1,1,1], getPosATL objBCurr, 1, 1, 45, "B", 1, 0.05, "TahomaB","center",true];
 	}];
 	
+	
 	"objAArmed" addPublicVariableEventHandler {
+		
 		if (objAArmed) then {
-			helipadA = "PortableHelipadLight_01_red_F" createVehicle [0,0,0];
-			helipadA attachTo [objACurr, [-1.3,0,-1.3]];
+			helipadA = "Land_HelipadEmpty_F" createVehicle [0,0,0];
+			helipadA attachTo [currChargeA, [0,0,0]];
 			helipadA say3D "bombAlarm";
 			if (side player == attackers) then {
-				player say3D ["US_Friendly_Charge_Armed_A",0,1];
+				playSound ["US_Friendly_Charge_Armed_A",true];
 			} else{
-				player say3D ["RU_Hostile_Charge_Armed_A",0,1];
+				playSound ["US_Friendly_Charge_Armed_A",true];
 			};
 		} else {
 			deleteVehicle helipadA;
@@ -136,12 +149,12 @@ if (isServer ) then {
 	"objBArmed" addPublicVariableEventHandler {
 		if (objBArmed) then {
 			helipadB = "Land_HelipadEmpty_F" createVehicle [0,0,0];
-			helipadB attachTo [objBCurr, [-1.3,0,-1.3]];
+			helipadB attachTo [currChargeB, [0,0,0]];
 			helipadB say3D "bombAlarm";
 			if (side player == attackers) then {
-				player say3D ["US_Friendly_Charge_Armed_B",0,1];
+				playSound ["US_Friendly_Charge_Armed_A",true];
 			}else{
-				player say3D ["RU_Hostile_Charge_Armed_B",0,1];
+				playSound ["US_Friendly_Charge_Armed_A",true];
 			};
 		} else {
 			deleteVehicle helipadB;
@@ -166,4 +179,6 @@ if (isServer ) then {
 		} else {
 			deleteVehicle helipadDB;
 		};
+		
 	};
+};
